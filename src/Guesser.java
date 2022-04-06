@@ -1,44 +1,29 @@
-import java.util.Scanner;
-
 public class Guesser {
     private String wordToGuess;
-    private int guessCount;
 
     public Guesser(String wordToGuess) {
         this.wordToGuess = wordToGuess;
     }
 
-    public String guess() {
-        Scanner in = new Scanner(System.in);
-        String input = in.nextLine();
-        char[] result = {'-','-','-','-','-'};
-
-        if (input.equals(wordToGuess))
-            result = wordToGuess.toCharArray();
-        else {
-            for (int i = 0; i < wordToGuess.length(); i++) {
-                if (wordToGuess.contains(Character.toString(input.charAt(i)))) {
-                    int wordToGuessCount = wordToGuess.length() - wordToGuess.replaceAll(Character.toString(input.charAt(i)),"").length();
-                    int inputCount = input.length() - input.replaceAll(Character.toString(input.charAt(i)),"").length();
-                    if (wordToGuess.charAt(i) == input.charAt(i))
-                        result[i] = input.charAt(i);
-                    else if (wordToGuess.contains(Character.toString(input.charAt(i))) &&
-                        wordToGuessCount - inputCount >= 0)
-                        result[i] = Character.toLowerCase(input.charAt(i));
+    public StringBuilder guess(String input) {
+        StringBuilder result = new StringBuilder("-----");
+        for (int i = 0; i < wordToGuess.length(); i++) {
+            for (int j = 0; j < wordToGuess.length(); j++) {
+                if (input.charAt(i) == wordToGuess.charAt(i)) {
+                    result.setCharAt(i, input.charAt(i));
+                    break;
+                }
+                if (input.charAt(i) == wordToGuess.charAt(j)) {
+                    result.setCharAt(i, Character.toLowerCase(input.charAt(i)));
+                    break;
                 }
             }
         }
-        guessCount++;
-
-        return String.valueOf(result);
+        return result;
     }
 
     public String getWordToGuess() {
         return wordToGuess;
-    }
-
-    public int getGuessCount() {
-        return guessCount;
     }
 
 }

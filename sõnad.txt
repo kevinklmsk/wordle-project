@@ -7,3 +7,6 @@ vihik
 juust
 vorst
 paber
+naine
+kuusk
+pluus

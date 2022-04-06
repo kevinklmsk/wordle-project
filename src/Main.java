@@ -1,39 +1,28 @@
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
     public static void main(String[] args) throws Exception{
-        List<String> Sõnad = loeSõnad("sõnad.txt");
-        int randomNum = ThreadLocalRandom.current().nextInt(0, Sõnad.size());
-        String sõna = Sõnad.get(randomNum).toUpperCase();
-        System.out.println(sõna);
-        Guesser word = new Guesser(sõna);
+        String wordToGuess = WordPicker.returnWord(WordPicker.loeSõnad("sõnad.txt"));
+        Guesser word = new Guesser(wordToGuess);
+        int guessCount = 6;
+        Scanner in = new Scanner(System.in);
         String guessResult = "";
 
-        while (!guessResult.equals(word.getWordToGuess())) {
-            guessResult = word.guess();
+        System.out.println(wordToGuess);
+        while (!guessResult.equals(word.getWordToGuess()) && guessCount != 0) {
+            String input = in.nextLine();
+            if (input.length() != 5) {
+                System.out.println("Sõna peab olema 5 täheline");
+                continue;
+            }
+            if (!input.equals(input.toUpperCase())) {
+                System.out.println("Sõna peab olema sisestatud suurtes tähtedes");
+                continue;
+            }
+            guessResult = word.guess(input).toString();
             System.out.println(guessResult);
-            if (word.getGuessCount() == 6) {
-                System.out.println("Fail");
-                break;
-            }
+            guessCount--;
         }
-    }
-
-
-    public static List<String> loeSõnad(String failinimi) throws Exception{
-        List<String> sõnad = new ArrayList<>();
-        File file = new File(failinimi);
-        try (Scanner s = new Scanner(file, "UTF-8")) {
-            while (s.hasNextLine()) {
-                String rida = s.nextLine();
-                sõnad.add(rida);
-            }
-        }
-        return sõnad;
+        System.out.println("Mäng läbi");
     }
 }
