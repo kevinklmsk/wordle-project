@@ -1,3 +1,6 @@
+/**
+* Guesser klass kontrollib, kas pakutud sõna võrdub arvatava sõnaga.
+ */
 public class Guesser {
     private String wordToGuess;
 

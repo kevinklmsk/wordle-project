@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * Peameetod
+ */
 public class Main {
     public static void main(String[] args) throws Exception{
         String wordToGuess = WordPicker.returnWord(WordPicker.loeSõnad("sõnad.txt"));
@@ -7,8 +10,9 @@ public class Main {
         int guessCount = 6;
         Scanner in = new Scanner(System.in);
         String guessResult = "";
+        System.out.println(wordToGuess); // testimiseks prindib välja õige sõna
 
-        System.out.println(wordToGuess);
+        // peaprogramm
         while (!guessResult.equals(word.getWordToGuess()) && guessCount != 0) {
             String input = in.nextLine();
             if (input.length() != 5) {
